@@ -6,14 +6,9 @@ const sendClientNotification = require('../service/client-notification.service')
 module.exports = async (commandPayload, commandMeta) => {
   new InputSchema(commandPayload, commandMeta);
 
-  const newClient = await createClient(commandPayload);
+  const newClient = await createClient({ ...commandPayload, status: 'confirmed' });
 
   await sendClientNotification(new ClientCreatedEvent(newClient.Item, commandMeta));
 
-  return {
-    body: {
-      message: 'Client created',
-      client: newClient.Item
-    }
-  };
+  return { body: newClient.Item };
 };

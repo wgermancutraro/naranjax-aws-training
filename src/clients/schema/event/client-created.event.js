@@ -12,7 +12,8 @@ class ClientCreatedEvent extends DownstreamEvent {
         id: { type: String, required: true },
         dni: { type: String, required: true },
         name: { type: String, required: true },
-        birth: { type: Date, required: true }
+        birth: { type: Date, required: true },
+        status: { type: String, enum: ['confirmed', 'deleted'] }
       }
     });
   }
