@@ -45,8 +45,7 @@ getOneClient:
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
-        - dynamodb:Query
-        - dynamodb:GetItem
+        - dynamodb:Scan
       Resource: [!GetAtt clientsTable.Arn, !Join ['/', [!GetAtt clientsTable.Arn, index/*]]]
   events:
     - http:
