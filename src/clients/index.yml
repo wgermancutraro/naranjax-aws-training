@@ -19,3 +19,19 @@ createClient:
         path: 'clients'
         method: post
         cors: true
+
+getAllClients:
+  handler: src/clients/handler/get-all-clients.handler
+  name: gerCutraro-dev-getAllClients
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-getAllClients-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Scan
+      Resource: !GetAtt clientsTable.Arn
+  events:
+    - http:
+        path: 'clients'
+        method: get
+        cors: true
