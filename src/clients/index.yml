@@ -53,3 +53,21 @@ getOneClient:
         path: 'clients/{id}'
         method: get
         cors: true
+
+deleteClient:
+  handler: src/clients/handler/delete-client.handler
+  name: gerCutraro-dev-deleteClient
+  description: Delete client by id
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-deleteClient-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Scan
+        - dynamodb:UpdateItem
+      Resource: !GetAtt clientsTable.Arn
+  events:
+    - http:
+        path: 'clients'
+        method: delete
+        cors: true
