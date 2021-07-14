@@ -35,3 +35,21 @@ getAllClients:
         path: 'clients'
         method: get
         cors: true
+
+getOneClient:
+  handler: src/clients/handler/get-one-client.handler
+  name: gerCutraro-dev-getOneClient
+  description: Get client by id
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-getOneClient-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+      Resource: [!GetAtt clientsTable.Arn, !Join ['/', [!GetAtt clientsTable.Arn, index/*]]]
+  events:
+    - http:
+        path: 'clients/{id}'
+        method: get
+        cors: true
