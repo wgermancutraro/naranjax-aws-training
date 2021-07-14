@@ -1,0 +1,19 @@
+createCard:
+  handler: src/cards/handler/create-card.handler
+  name: gerCutraro-dev-createCard
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-createCard-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:UpdateItem
+      Resource: !GetAtt clientsTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:GetQueueAttributes
+      Resource: !GetAtt CreateCardQueue.Arn
+  events:
+    - sqs:
+        arn: !GetAtt CreateCardQueue.Arn

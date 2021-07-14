@@ -1,0 +1,21 @@
+createClient:
+  handler: src/clients/handler/create-client.handler
+  name: gerCutraro-dev-createClient
+  timeout: 10
+  environment:
+    SNS_ARN: !Ref ClientCreatedNotification
+  iamRoleStatementsName: gerCutraro-createClient-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:PutItem
+      Resource: !GetAtt clientsTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - sns:Publish
+      Resource: !Ref ClientCreatedNotification
+  events:
+    - http:
+        path: 'clients'
+        method: post
+        cors: true

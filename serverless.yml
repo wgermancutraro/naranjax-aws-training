@@ -1,0 +1,65 @@
+service: gercutraro
+
+app: gercutraro-sdk
+
+frameworkVersion: '2'
+
+useDotenv: true
+
+custom:
+  environments:
+    region: us-east-1
+    cardQueueName: gerCutraro-createCard-dev
+    giftQueueName: gerCutraro-createGift-dev
+    createClientNotificationName: gerCutraro-clientCreatedNotification-dev
+    clientTableName: gerCutraro-dev-clients
+    defaultProfile: 450865910417_AZAWS-Training-Developers
+    defaultStage: dev
+    stages:
+      - local
+      - dev
+      - qa
+      - production
+  serverless-offline:
+    useChildProcesses: true
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+        - .git/**
+        - .serverless/**
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  apiGateway:
+    shouldStartNameWithService: true
+  tracing:
+    lambda: true
+  lambdaHashingVersion: 20201221
+  region: ${self:custom.environments.region}
+  profile: ${self:custom.environments.defaultProfile}
+  stage: ${opt:stage, self:custom.environments.defaultStage}
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - .git/**
+    - .serverless/**
+    - aws-sdk
+
+resources:
+  - ${file(resources/clients/dynamodb.yml)}
+  - ${file(resources/clients/sns.yml)}
+  - ${file(resources/gifts/sqs.yml)}
+  - ${file(resources/cards/sqs.yml)}
+
+functions:
+  - ${file(src/clients/index.yml)}
+  - ${file(src/cards/index.yml)}
+  - ${file(src/gifts/index.yml)}
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-dotenv-plugin

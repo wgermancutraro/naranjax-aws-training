@@ -1,0 +1,19 @@
+createGift:
+  handler: src/gifts/handler/create-gift.handler
+  name: gerCutraro-dev-createGift
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-createGift-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:UpdateItem
+      Resource: !GetAtt clientsTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - sqs:DeleteMessage
+        - sqs:ReceiveMessage
+        - sqs:GetQueueAttributes
+      Resource: !GetAtt CreateGiftQueue.Arn
+  events:
+    - sqs:
+        arn: !GetAtt CreateGiftQueue.Arn

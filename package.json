@@ -1,0 +1,19 @@
+{
+  "name": "naranjax-training-gc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://gitlab.com/gercutraro/naranjax-aws-training.git",
+  "author": "Germán Cutraro <cutraroger@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy -v"
+  },
+  "dependencies": {
+    "ebased": "^1.6.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.941.0",
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-iam-roles-per-function": "^3.2.0"
+  }
+}

@@ -1,0 +1,7 @@
+Resources:
+  CreateCardQueue:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: ${self:custom.environments.cardQueueName}
+      # MaximumMessageSize: 64
+      MessageRetentionPeriod: 120

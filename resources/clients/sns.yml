@@ -1,0 +1,28 @@
+Resources:
+  ClientCreatedNotification:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      TopicName: ${self:custom.environments.createClientNotificationName}
+      Subscription:
+        - Protocol: sqs
+          Endpoint: !GetAtt CreateCardQueue.Arn
+        - Protocol: sqs
+          Endpoint: !GetAtt CreateGiftQueue.Arn
+  SnsToSqsPolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: 'Allow SNS publish to SQS'
+            Effect: Allow
+            Principal:
+              Service: 'sns.amazonaws.com'
+            Resource: [!GetAtt CreateCardQueue.Arn, !GetAtt CreateGiftQueue.Arn]
+            Action: SQS:SendMessage
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !Ref ClientCreatedNotification
+      Queues:
+        - Ref: CreateCardQueue
+        - Ref: CreateGiftQueue
