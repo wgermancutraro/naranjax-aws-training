@@ -1,4 +1,5 @@
 const CreatePurchaseInputValidation = require('../schema/input/create-purchase.input');
+const SumPointsEventValidation = require('../schema/event/create-purchase.event');
 const createPurchase = require('../service/create-purchase.service');
 const { ErrorHandled } = require('ebased/util/error');
 const { errorMessages, errorCodes } = require('../../clients/helper/clients-constants.helper');
@@ -8,6 +9,7 @@ const {
   CLASSIC_DISCOUNT,
   AMOUNT_TO_ADD_POINT
 } = require('../helper/purchase-constants.helper');
+const sendClientPointsNotification = require('../../clients/service/send-notification.service');
 
 module.exports = async (commandPayload, commandMeta) => {
   new CreatePurchaseInputValidation(commandPayload, commandMeta);
@@ -37,6 +39,13 @@ module.exports = async (commandPayload, commandMeta) => {
     client: commandPayload.dni,
     total
   });
+
+  // If the client beats $200 we send a notification to the sns
+  const totalBy200 = Math.floor(total / AMOUNT_TO_ADD_POINT);
+  if (totalBy200 >= 1)
+    await sendClientPointsNotification(
+      new SumPointsEventValidation({ client: commandPayload.dni, pointsToAdd: totalBy200 }, commandMeta)
+    );
 
   return { body: purchase.Item };
 };
