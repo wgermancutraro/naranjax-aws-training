@@ -1,8 +1,10 @@
 const { getAllClients } = require('../service/get-clients.service');
+const { ErrorHandled } = require('ebased/util/error');
 const UpdateClientByIdValidation = require('../schema/input/update-client.input');
 const changeCardOrGiftValidationEvent = require('../schema/event/change-card-or-gift.event');
 const updateUser = require('../../cards/service/updateUser.service');
 const changeCardOrGift = require('../service/send-notification.service');
+const { errorMessages, errorCodes } = require('../helper/clients-constants.helper');
 
 module.exports = async (commandPayload, commandMeta) => {
   new UpdateClientByIdValidation(commandPayload, commandMeta);
