@@ -53,6 +53,30 @@ getOneClient:
         method: get
         cors: true
 
+editClient:
+  handler: src/clients/handler/edit-client.handler
+  name: gerCutraro-dev-editClient
+  description: Edit client by id
+  environment:
+    SNS_ARN: !Ref ChangeCardAndGift
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-editClien-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Scan
+        - dynamodb:UpdateItem
+      Resource: !GetAtt clientsTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - sns:Publish
+      Resource: !Ref ChangeCardAndGift
+  events:
+    - http:
+        path: 'clients'
+        method: put
+        cors: true
+
 deleteClient:
   handler: src/clients/handler/delete-client.handler
   name: gerCutraro-dev-deleteClient

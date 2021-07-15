@@ -13,6 +13,7 @@ custom:
     giftQueueName: gerCutraro-createGift-dev
     createClientNotificationName: gerCutraro-clientCreatedNotification-dev
     clientTableName: gerCutraro-dev-clients
+    ChangeCardAndGiftName: gerCutraro-changeCardAndGift-dev
     defaultProfile: 450865910417_AZAWS-Training-Developers
     defaultStage: dev
     stages:
