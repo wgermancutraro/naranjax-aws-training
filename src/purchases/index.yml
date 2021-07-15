@@ -1,0 +1,16 @@
+createPurchase:
+  handler: src/purchases/handler/create-purchase.handler
+  name: gerCutraro-dev-createPurchase
+  timeout: 10
+  iamRoleStatementsName: gerCutraro-createPurchase-dev
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:Scan
+      Resource: !GetAtt PurchasesTable.Arn
+  events:
+    - http:
+        path: 'purchases'
+        method: post
+        cors: true

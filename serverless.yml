@@ -13,6 +13,7 @@ custom:
     giftQueueName: gerCutraro-createGift-dev
     createClientNotificationName: gerCutraro-clientCreatedNotification-dev
     clientTableName: gerCutraro-dev-clients
+    purchasesTableName: gerCutraro-dev-purchases
     ChangeCardAndGiftName: gerCutraro-changeCardAndGift-dev
     defaultProfile: 450865910417_AZAWS-Training-Developers
     defaultStage: dev
@@ -55,11 +56,13 @@ resources:
   - ${file(resources/clients/sns.yml)}
   - ${file(resources/gifts/sqs.yml)}
   - ${file(resources/cards/sqs.yml)}
+  - ${file(resources/purchases/dynamodb.yml)}
 
 functions:
   - ${file(src/clients/index.yml)}
   - ${file(src/cards/index.yml)}
   - ${file(src/gifts/index.yml)}
+  - ${file(src/purchases/index.yml)}
 
 plugins:
   - serverless-iam-roles-per-function
