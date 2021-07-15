@@ -6,9 +6,9 @@ module.exports = async (commandPayload, commandMeta) => {
   new DeleteClientByIdValidation(commandPayload, commandMeta);
 
   const clients = await getAllClients();
-  const client = clients.Items.filter(client => client.id === commandPayload.id);
+  const client = clients.Items.find(client => client.id === commandPayload.id);
 
-  if (!client[0])
+  if (!client)
     throw new ErrorHandled(errorMessages.clientNotFound, {
       code: errorCodes.clientNotFound,
       layer: 'DOMAIN'
@@ -17,7 +17,7 @@ module.exports = async (commandPayload, commandMeta) => {
   const result = await updateUser({
     table: process.env.CLIENTS_TABLE_NAME,
     primaryKey: 'dni',
-    primaryKeyValue: client[0].dni,
+    primaryKeyValue: client.dni,
     body: {
       status: 'deleted'
     }

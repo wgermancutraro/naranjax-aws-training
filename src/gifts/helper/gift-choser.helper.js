@@ -1,4 +1,4 @@
-function giftChoser(birthday) {
+function giftChooser(birthday) {
   const month = parseInt(birthday.split('-')[1]);
   const day = parseInt(birthday.split('-')[2]);
 
@@ -27,4 +27,4 @@ function giftChoser(birthday) {
   return gift;
 }
 
-module.exports = giftChoser;
+module.exports = giftChooser;

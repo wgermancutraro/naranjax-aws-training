@@ -8,11 +8,11 @@ module.exports = async (commandPayload, commandMeta) => {
 
   const client = await getClientById(commandPayload.id);
 
-  if (!client.Items.length)
+  if (!client)
     throw new ErrorHandled(errorMessages.clientNotFound, {
       code: errorCodes.clientNotFound,
       layer: 'DOMAIN'
     });
 
-  return { body: client.Items[0] };
+  return { body: client };
 };

@@ -1,5 +1,5 @@
 const InputSchema = require('../schema/input/create-gift.input');
-const giftChoser = require('../helper/gift-choser.helper');
+const giftChooser = require('../helper/gift-choser.helper');
 const updateUser = require('../../cards/service/updateUser.service');
 
 module.exports = async (batchPayload, batchMeta) => {
@@ -12,7 +12,7 @@ module.exports = async (batchPayload, batchMeta) => {
     primaryKey: 'dni',
     primaryKeyValue: item.dni,
     body: {
-      gift: giftChoser(item.birth)
+      gift: giftChooser(item.birth)
     }
   });
 
