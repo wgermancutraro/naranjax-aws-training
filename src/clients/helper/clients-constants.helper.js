@@ -1,7 +1,9 @@
 exports.errorMessages = {
-  clientNotFound: 'Client not found'
+  clientNotFound: 'Client not found',
+  invalidClient: 'The client is not active'
 };
 
 exports.errorCodes = {
-  clientNotFound: 'CLIENT_NOT_FOUND'
+  clientNotFound: 'CLIENT_NOT_FOUND',
+  invalidClient: 'CLIENT_DELETED'
 };

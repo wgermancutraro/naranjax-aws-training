@@ -9,7 +9,7 @@ useDotenv: true
 custom:
   environments:
     region: us-east-1
-    cardQueueName: gerCutraro-createCard-dev
+    cardQueueName: ${self:service}-createCard-dev
     giftQueueName: gerCutraro-createGift-dev
     createClientNotificationName: gerCutraro-clientCreatedNotification-dev
     clientTableName: gerCutraro-dev-clients

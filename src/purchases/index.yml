@@ -1,14 +1,20 @@
 createPurchase:
   handler: src/purchases/handler/create-purchase.handler
   name: gerCutraro-dev-createPurchase
+  description: Create a purchase by client DNI
+  environment:
+    PURCHASE_TABLE_NAME: ${self:custom.environments.purchasesTableName}
   timeout: 10
   iamRoleStatementsName: gerCutraro-createPurchase-dev
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
         - dynamodb:PutItem
-        - dynamodb:Scan
       Resource: !GetAtt PurchasesTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:GetItem
+      Resource: !GetAtt clientsTable.Arn
   events:
     - http:
         path: 'purchases'
